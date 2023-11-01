@@ -49,7 +49,7 @@ parse_inputs() {
 main() {
 
     scriptDir=$(dirname "${0}")
-    # shellcheck source=yaml_lint.sh
+    # shellcheck disable=SC1091
     source "${scriptDir}/yaml_lint.sh"
     parse_inputs
 
