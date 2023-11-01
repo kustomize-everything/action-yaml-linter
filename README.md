@@ -33,7 +33,7 @@ jobs:
       - name: 'Checkout Code'
         uses: actions/checkout@master
       - name: 'Run Yamllint'
-        uses: kustomize-everything/yamllint-github-action@master
+        uses: kustomize-everything/yamllint-github-action@main
         with:
           yamllint_file_or_dir: '.'
           yamllint_strict: false
