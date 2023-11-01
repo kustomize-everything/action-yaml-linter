@@ -3,13 +3,11 @@ name: "Continuous Integration"
 on:
   push:
     branches:
-      - 'master'
       - 'main'
   schedule:
     - cron: '22 22 * * 5'
   pull_request:
     branches:
-      - 'master'
       - 'main'
 
 jobs:

@@ -1,70 +1,74 @@
-# action-yaml-linter [fork of karancode/yamllint-github-action](https://github.com/karancode/yamllint-github-action==l)
+# action-yaml-linter
 
-Yamllint GitHub Actions allow you to execute `yamllint` command within GitHub Actions.
+This repository is a [fork of karancode/yamllint-github-action](https://github.com/karancode/yamllint-github-action==l), tailored for running `yamllint` within GitHub Actions. Particularly useful for projects utilizing Kustomize, this action ensures that YAML files, which are extensively used in Kustomize for Kubernetes resource management, adhere to best practices and maintain consistent syntax and structure.
 
-The output of the actions can be viewed from the Actions tab in the main repository view. If the actions are executed on a pull request event, a comment may be posted on the pull request.
+## Significance in Kustomize Projects
 
-Yamllint GitHub Actions is a single GitHub Action that can be executed on different directories depending on the content of the GitHub Actions YAML file.
+Using Kustomize means dealing with a multitude of YAML files. Linting these files is crucial because it:
 
-## Success Criteria
+- **Ensures Uniformity:** Keeps formatting consistent across all YAML files.
+- **Detects Errors:** Identifies syntax issues and accidental typos early.
+- **Upholds Standards:** Maintains high-quality, readable, and maintainable Kubernetes configurations.
 
-An exit code of `0` is considered a successful execution.
+## Features
+
+- **Adaptable:** Can be configured for different directories via the GitHub Actions YAML file.
+- **Pull Request Integration:** Automatically comments on pull requests with `yamllint` findings.
+- **Success Indicator:** Successful execution is marked by an exit code of `0`.
 
 ## Usage
 
-The most common usage is to run `yamllint` on a file/directory. A comment will be posted to the pull request depending on the output of the Yamllint command being executed. This workflow can be configured by adding the following content to the GitHub Actions workflow YAML file.
+### Basic Usage
+
+For general use, including linting all YAML files in the repository, use the following configuration in your GitHub Actions workflow:
 
 ```yaml
-name: 'Yamllint GitHub Actions'
-on:
-  - pull_request
+name: 'YAML Lint'
+on: [push, pull_request]
 jobs:
   yamllint:
-    name: 'Yamllint'
+    name: 'Run Yamllint on All Files'
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout'
+      - name: 'Checkout Code'
         uses: actions/checkout@master
-      - name: 'Yamllint'
-        uses: karancode/yamllint-github-action@master
+      - name: 'Run Yamllint'
+        uses: kustomize-everything/yamllint-github-action@master
         with:
-          yamllint_file_or_dir: '<yaml_file_or_dir>'
+          yamllint_file_or_dir: '.'
           yamllint_strict: false
           yamllint_comment: true
         env:
           GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-This was a simplified example showing the basic features of this Yamllint GitHub Actions.
+This configuration sets up a workflow that triggers on both push and pull request events, linting every YAML file in the repository.
 
-## Inputs
+## Configuration
 
-Inputs configure Yamllint GitHub Actions to perform lint action.
+### Inputs
 
-| Parameter                    | Default | Description                                                                                                               |
-|------------------------------|---------|---------------------------------------------------------------------------------------------------------|
-| `yamllint_file_or_dir`       | .       | (Optional) The file or directory to run `yamllint` on (assumes that the directory contains *.yaml file) |
-| `yamllint_strict`            | `false` | (Optional) Yamllint strict option.                                  |
-| `yamllint_config_filepath`   | `empty` | (Optional) Path to a custom config file.                            |
-| `yamllint_config_datapath`   | `empty` | (Optional) Custom configuration (as YAML source).                   |
-| `yamllint_format`            | `auto`  | (Optional) Format for parsing.                                      |
-| `yamllint_comment`           | `false` | (Optional) Comment on GitHub pull requests, possible are true,false |
+Tailor the action with these inputs:
 
-## Outputs
+| Parameter                  | Default | Description                                                                       |
+|----------------------------|---------|-----------------------------------------------------------------------------------|
+| `yamllint_file_or_dir`     | `.`     | (Optional) Target file or directory for `yamllint`. Defaults to all YAML files.   |
+| `yamllint_strict`          | `false` | (Optional) Toggle strict mode.                                                    |
+| `yamllint_config_filepath` | `empty` | (Optional) Custom config file path.                                               |
+| `yamllint_config_datapath` | `empty` | (Optional) Custom config as YAML source.                                          |
+| `yamllint_format`          | `auto`  | (Optional) Specify output format.                                                 |
+| `yamllint_comment`         | `false` | (Optional) Enable/disable commenting on GitHub PRs.                               |
 
-Outputs are used to pass information to subsequent GitHub Actions steps.
+### Outputs
 
-* `yamllint_output` - The Yamllint build outputs.
+- `yamllint_output`: The linting output from the action.
 
-## Secrets
+### Secrets
 
-Secrets are similar to inputs except that they are encrypted and only used by GitHub Actions. It's a convenient way to keep sensitive data out of the GitHub Actions workflow YAML file.
-
-* `GITHUB_ACCESS_TOKEN` - (Optional) The GitHub API token used to post comments to pull requests. Not required if the `yamllint_comment` input is set to `false`.
+- `GITHUB_ACCESS_TOKEN`: (Optional) For GitHub API use, needed to comment on PRs if `yamllint_comment` is `true`.
 
 ## Development
 
 ### Testing
 
-For testing the [bats](https://github.com/bats-core/bats-core) testing framework is used.
-Tests can be run with ``./tests/run.bats`` but first you need to install [bats](https://github.com/bats-core/bats-core#installation).
+Test using the [bats](https://github.com/bats-core/bats-core) framework. After installing [bats](https://github.com/bats-core/bats-core#installation), run tests with `./tests/run.bats`.
