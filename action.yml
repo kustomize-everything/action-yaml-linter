@@ -37,4 +37,6 @@ outputs:
     description: 'Output of yamllint'
 runs:
   using: 'docker'
-  image: 'Dockerfile'
+  # Dockerfile is automatically used in PRs, but not CI
+  # image: 'Dockerfile'
+  image: 'docker://ghcr.io/kustomize-everything/action-yaml-linter:v3.0.0'
