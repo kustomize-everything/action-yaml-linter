@@ -2,13 +2,15 @@
 name: "Continuous Integration"
 on:
   push:
-    branches-ignore:
-      - 'dependabot/*'
+    branches:
+      - 'master'
+      - 'main'
   schedule:
     - cron: '22 22 * * 5'
   pull_request:
     branches:
       - 'master'
+      - 'main'
 
 jobs:
   test:
@@ -19,8 +21,9 @@ jobs:
         run: sudo apt-get -y install bats > /dev/null
       - name: Run CI script
         run: ./tests/run.bats
+      # Should only run when the action is running from a PR
       - name: If PR, set action.yml runs.image to Dockerfile
-        if: ${{ github.event_name == 'pull_request' }}
+        if: github.event_name == 'pull_request'
         run: yq -i '.runs.image = "Dockerfile"' action.yml
       - name: Run action
         uses: ./
