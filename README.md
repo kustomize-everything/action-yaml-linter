@@ -1,6 +1,6 @@
 # action-yaml-linter
 
-This repository is a [fork of karancode/yamllint-github-action](https://github.com/karancode/yamllint-github-action==l), tailored for running `yamllint` within GitHub Actions. Particularly useful for projects utilizing Kustomize, this action ensures that YAML files, which are extensively used in Kustomize for Kubernetes resource management, adhere to best practices and maintain consistent syntax and structure.
+This repository is a [fork of karancode/yamllint-github-action](https://github.com/karancode/yamllint-github-action), tailored for running `yamllint` within GitHub Actions. Particularly useful for projects utilizing Kustomize, this action ensures that YAML files, which are extensively used in Kustomize for Kubernetes resource management, adhere to best practices and maintain consistent syntax and structure.
 
 ## Significance in Kustomize Projects
 
