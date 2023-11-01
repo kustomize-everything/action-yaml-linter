@@ -1,4 +1,4 @@
-# yamllint-github-action
+# action-yaml-linter [fork of karancode/yamllint-github-action](https://github.com/karancode/yamllint-github-action==l)
 
 Yamllint GitHub Actions allow you to execute `yamllint` command within GitHub Actions.
 
