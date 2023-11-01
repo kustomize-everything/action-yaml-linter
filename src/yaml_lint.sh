@@ -45,8 +45,10 @@ $(cat lint_result.txt)
         echo "${lint_payload}" | curl -s -S -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" --header "Content-Type: application/json" --data @- "${lint_comment_url}" > /dev/null
     fi
 
-    echo "yamllint_output<<EOF" >> "$GITHUB_OUTPUT"
-    cat lint_result.txt >> "$GITHUB_OUTPUT"
-    echo "EOF" >> "$GITHUB_OUTPUT"
+    {
+        echo "yamllint_output<<EOF";
+        cat lint_result.txt;
+        echo "EOF";
+    } >> "$GITHUB_OUTPUT"
     exit ${lint_exit_code}
 }
