@@ -4,7 +4,7 @@ yaml_lint() {
 
     # gather output
     echo "lint: info: yamllint on ${yamllint_file_or_dir}."
-    yamllint ${yamllint_strict} ${yamllint_config_filepath} ${yamllint_config_datapath} ${yamllint_format} ${yamllint_file_or_dir} > lint_result.txt
+    yamllint "${yamllint_strict}" "${yamllint_config_filepath}" "${yamllint_config_datapath}" "${yamllint_format}" "${yamllint_file_or_dir}" > lint_result.txt
     lint_exit_code=${?}
 
     # exit code 0 - success
@@ -37,7 +37,7 @@ $(cat lint_result.txt)
 
         echo "lint: info: creating json"
         lint_payload=$(echo "${lint_comment_wrapper}" | jq -R --slurp '{body: .}')
-        lint_comment_url=$(cat ${GITHUB_EVENT_PATH} | jq -r .pull_request.comments_url)
+        lint_comment_url=$(cat "${GITHUB_EVENT_PATH}" | jq -r .pull_request.comments_url)
         echo "lint: info: commenting on the pull request"
         echo "${lint_payload}" | curl -s -S -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" --header "Content-Type: application/json" --data @- "${lint_comment_url}" > /dev/null
     fi

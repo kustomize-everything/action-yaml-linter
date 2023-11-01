@@ -40,8 +40,8 @@ parse_inputs() {
 
 main() {
 
-    scriptDir=$(dirname ${0})
-    source ${scriptDir}/yaml_lint.sh
+    scriptDir=$(dirname "${0}")
+    source "${scriptDir}"/yaml_lint.sh
     parse_inputs
 
     yaml_lint
