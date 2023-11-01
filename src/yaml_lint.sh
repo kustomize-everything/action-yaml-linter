@@ -3,7 +3,9 @@
 yaml_lint() {
 
     # gather output
+    # shellcheck disable=SC2154
     echo "lint: info: yamllint on ${yamllint_file_or_dir}."
+    # shellcheck disable=SC2154,SC2086
     yamllint ${yamllint_strict} ${yamllint_config_filepath} ${yamllint_config_datapath} ${yamllint_format} ${yamllint_file_or_dir} > lint_result.txt
     lint_exit_code=${?}
 
@@ -24,6 +26,7 @@ yaml_lint() {
     fi
 
     # comment if lint failed
+    # shellcheck disable=SC2154
     if [ "${GITHUB_EVENT_NAME}" = "pull_request" ] && [ "${yamllint_comment}" = "1" ] && [ ${lint_exit_code} -ne 0 ]; then
         lint_comment_wrapper="#### \`yamllint\` ${lint_comment_status}
 <details><summary>Show Output</summary>
@@ -37,7 +40,7 @@ $(cat lint_result.txt)
 
         echo "lint: info: creating json"
         lint_payload=$(echo "${lint_comment_wrapper}" | jq -R --slurp '{body: .}')
-        lint_comment_url=$(cat "${GITHUB_EVENT_PATH}" | jq -r .pull_request.comments_url)
+        lint_comment_url=$(jq -r .pull_request.comments_url "${GITHUB_EVENT_PATH}")
         echo "lint: info: commenting on the pull request"
         echo "${lint_payload}" | curl -s -S -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" --header "Content-Type: application/json" --data @- "${lint_comment_url}" > /dev/null
     fi
