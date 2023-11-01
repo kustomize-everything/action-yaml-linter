@@ -19,6 +19,9 @@ jobs:
         run: sudo apt-get -y install bats > /dev/null
       - name: Run CI script
         run: ./tests/run.bats
+      - name: If PR, set action.yml runs.image to Dockerfile
+        if: github.event_name == 'pull_request'
+        run: yq -i '.runs.image = "Dockerfile"' action.yml
       - name: Run action
         uses: ./
         with:
