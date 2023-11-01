@@ -1,8 +1,9 @@
 ---
 # action.yaml
-name: 'Yamllint Github Action'
-author: 'karancode <karanthanvi0@gmail.com>'
-description: 'Github action for Yamllint - manily to liniting yaml files for k8s config'
+name: 'Action YAML Linter'
+# Original author: 'karancode <karanthanvi0@gmail.com>'
+author: 'highb <759848+highb@users.noreply.github.com>'
+description: 'Github action for Yamllint - mainly to lint yaml files for k8s config'
 branding:
   icon: 'sliders'
   color: 'green'
