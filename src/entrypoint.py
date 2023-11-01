@@ -2,6 +2,14 @@ import os
 import subprocess
 import json
 import requests
+import uuid
+
+def set_multiline_output(name, value):
+    with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
+        delimiter = uuid.uuid1()
+        print(f'{name}<<{delimiter}', file=fh)
+        print(value, file=fh)
+        print(delimiter, file=fh)
 
 def parse_inputs():
     env = os.environ
@@ -36,7 +44,7 @@ def yaml_lint(file_or_dir, strict, config_filepath, config_datapath, format_opt,
         comment_wrapper = create_comment(file_or_dir, lint_comment_status, lint_result)
         post_comment(comment_wrapper)
 
-    print(f"::set-output name=yamllint_output::{lint_result}")
+    set_multiline_output("yamllint_output", lint_result)
 
     return result.returncode
 
