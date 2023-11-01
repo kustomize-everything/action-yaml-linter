@@ -14,4 +14,3 @@ spec:
             - monitoring
     endpoints:
         - path: /alerts/metrics
-  bad: this is bad
