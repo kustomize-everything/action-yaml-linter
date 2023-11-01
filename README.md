@@ -38,7 +38,7 @@ jobs:
         # find the latest semver vX.Y.Z, vX release, or Git SHA for the action
         # and pin yourself to that in order to prevent surprising changes to
         # your workflows when a new change is pushed to master/main.
-        uses: kustomize-everything/yamllint-github-action@main
+        uses: kustomize-everything/action-yaml-linter@main
         with:
           yamllint_file_or_dir: '.'
           yamllint_strict: false
