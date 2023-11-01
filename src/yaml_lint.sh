@@ -1,6 +1,6 @@
 #!/bin/sh
 
-function yaml_lint {
+yaml_lint() {
 
     # gather output
     echo "lint: info: yamllint on ${yamllint_file_or_dir}."
@@ -8,7 +8,7 @@ function yaml_lint {
     lint_exit_code=${?}
 
     # exit code 0 - success
-    if [ ${lint_exit_code} -eq 0 ];then
+    if [ ${lint_exit_code} -eq 0 ]; then
         lint_comment_status="Success"
         echo "lint: info: successful yamllint on ${yamllint_file_or_dir}."
         cat lint_result.txt
@@ -24,7 +24,7 @@ function yaml_lint {
     fi
 
     # comment if lint failed
-    if [ "${GITHUB_EVENT_NAME}" == "pull_request" ] && [ "${yamllint_comment}" == "1" ] && [ ${lint_exit_code} -ne 0 ]; then
+    if [ "${GITHUB_EVENT_NAME}" = "pull_request" ] && [ "${yamllint_comment}" = "1" ] && [ ${lint_exit_code} -ne 0 ]; then
         lint_comment_wrapper="#### \`yamllint\` ${lint_comment_status}
 <details><summary>Show Output</summary>
 
@@ -34,7 +34,7 @@ $(cat lint_result.txt)
 </details>
 
 *Workflow: \`${GITHUB_WORKFLOW}\`, Action: \`${GITHUB_ACTION}\`, Lint: \`${yamllint_file_or_dir}\`*"
-    
+
         echo "lint: info: creating json"
         lint_payload=$(echo "${lint_comment_wrapper}" | jq -R --slurp '{body: .}')
         lint_comment_url=$(cat ${GITHUB_EVENT_PATH} | jq -r .pull_request.comments_url)
@@ -47,4 +47,3 @@ $(cat lint_result.txt)
     echo "EOF" >> "$GITHUB_OUTPUT"
     exit ${lint_exit_code}
 }
-

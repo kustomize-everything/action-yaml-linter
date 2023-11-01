@@ -1,7 +1,7 @@
 #!/bin/sh
 
-function parse_inputs {
-    
+parse_inputs() {
+
     yamllint_file_or_dir=""
     if [ "${INPUT_YAMLLINT_FILE_OR_DIR}" != "" ] || [ "${INPUT_YAMLLINT_FILE_OR_DIR}" != "." ]; then
         yamllint_file_or_dir="${INPUT_YAMLLINT_FILE_OR_DIR}"
@@ -38,14 +38,14 @@ function parse_inputs {
 
 }
 
-function main {
+main() {
 
     scriptDir=$(dirname ${0})
     source ${scriptDir}/yaml_lint.sh
     parse_inputs
-    
+
     yaml_lint
-    
+
 }
 
 main "${*}"
