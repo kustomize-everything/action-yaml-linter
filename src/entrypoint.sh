@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 parse_inputs() {
 
@@ -13,17 +13,17 @@ parse_inputs() {
     fi
 
     yamllint_config_filepath=''
-    if [ ! -z "${INPUT_YAMLLINT_CONFIG_FILEPATH}" ]; then
+    if [ -n "${INPUT_YAMLLINT_CONFIG_FILEPATH}" ]; then
         yamllint_config_filepath="--config-file ${INPUT_YAMLLINT_CONFIG_FILEPATH}"
     fi
 
     yamllint_config_datapath=''
-    if [ ! -z "${INPUT_YAMLLINT_CONFIG_DATAPATH}" ]; then
+    if [ -n "${INPUT_YAMLLINT_CONFIG_DATAPATH}" ]; then
         yamllint_config_datapath="--config-data ${INPUT_YAMLLINT_CONFIG_DATAPATH}"
     fi
 
     yamllint_format=''
-    if [ ! -z "${INPUT_YAMLLINT_FORMAT}" ]; then
+    if [ -n "${INPUT_YAMLLINT_FORMAT}" ]; then
         yamllint_format="--format ${INPUT_YAMLLINT_FORMAT}"
     fi
 
@@ -36,12 +36,20 @@ parse_inputs() {
         yamllint_comment="1"
     fi
 
+    # These are required parameters for yaml_lint()
+    export yamllint_file_or_dir
+    export yamllint_strict
+    export yamllint_config_filepath
+    export yamllint_config_datapath
+    export yamllint_format
+    export yamllint_comment
+
 }
 
 main() {
 
     scriptDir=$(dirname "${0}")
-    source "${scriptDir}"/yaml_lint.sh
+    source "${scriptDir}/yaml_lint.sh"
     parse_inputs
 
     yaml_lint
