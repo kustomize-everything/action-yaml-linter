@@ -33,6 +33,11 @@ jobs:
       - name: 'Checkout Code'
         uses: actions/checkout@master
       - name: 'Run Yamllint'
+        # Use of master/main here is not best practice and is only used here for the
+        # sake of keeping this example easy to maintain. In your workflows,
+        # find the latest semver vX.Y.Z, vX release, or Git SHA for the action
+        # and pin yourself to that in order to prevent surprising changes to
+        # your workflows when a new change is pushed to master/main.
         uses: kustomize-everything/yamllint-github-action@main
         with:
           yamllint_file_or_dir: '.'
