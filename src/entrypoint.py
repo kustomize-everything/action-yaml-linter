@@ -3,6 +3,7 @@ import subprocess
 import json
 import requests
 import uuid
+from github import Github
 
 def set_multiline_output(name, value):
     with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
@@ -59,15 +60,21 @@ def create_comment(file_or_dir, status, result):
 *Workflow: `{os.environ.get('GITHUB_WORKFLOW')}`, Action: `{os.environ.get('GITHUB_ACTION')}`, Lint: `{file_or_dir}`*"""
 
 def post_comment(comment_wrapper):
-    lint_payload = {"body": comment_wrapper}
-    lint_comment_url = json.loads(os.environ["GITHUB_EVENT_PATH"]).get("pull_request", {}).get("comments_url")
-    if lint_comment_url:
-        headers = {"Authorization": f"token {os.environ['GITHUB_ACCESS_TOKEN']}", "Content-Type": "application/json"}
-        try:
-            response = requests.post(lint_comment_url, headers=headers, json=lint_payload)
-            response.raise_for_status()
-        except requests.RequestException as e:
-            print(f"Failed to post comment on the pull request: {e}")
+    g = Github(os.environ['GITHUB_ACCESS_TOKEN'])
+    event_path = os.environ['GITHUB_EVENT_PATH']
+
+    with open(event_path) as json_file:
+        event_data = json.load(json_file)
+    pr_number = event_data.get("pull_request", {}).get("number")
+    repo_name = event_data.get("repository", {}).get("full_name")
+
+    if pr_number and repo_name:
+        repo = g.get_repo(repo_name)
+        pr = repo.get_pull(pr_number)
+        pr.create_issue_comment(comment_wrapper)
+        print("Comment posted successfully.")
+    else:
+        print("Pull request number or repository name not found.")
 
 def main():
     file_or_dir, strict, config_filepath, config_datapath, format_opt, comment = parse_inputs()
