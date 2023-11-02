@@ -106,6 +106,7 @@ function setup() {
   -v "${ROOT_DIR}:/mnt/" \
   -e INPUT_YAMLLINT_FILE_OR_DIR="${INPUT_YAMLLINT_FILE_OR_DIR}" \
   -e INPUT_YAMLLINT_COMMENT="1" \
+  -e GITHUB_ACCESS_TOKEN="${GITHUB_ACCESS_TOKEN}" \
   -e GITHUB_EVENT_PATH="/tmp/" \
   -e GITHUB_EVENT_NAME="pull_request" \
   --mount type=bind,source="${GITHUB_OUTPUT_FILE}",target=/github_output \
@@ -130,6 +131,7 @@ function setup() {
   -v "${ROOT_DIR}:/mnt/" \
   -e INPUT_YAMLLINT_FILE_OR_DIR="${INPUT_YAMLLINT_FILE_OR_DIR}" \
   -e INPUT_YAMLLINT_COMMENT="true" \
+  -e GITHUB_ACCESS_TOKEN="${GITHUB_ACCESS_TOKEN}" \
   -e GITHUB_EVENT_PATH="/tmp/" \
   -e GITHUB_EVENT_NAME="pull_request" \
   --mount type=bind,source="${GITHUB_OUTPUT_FILE}",target=/github_output \
