@@ -73,7 +73,7 @@ function setup() {
   echo $output | grep -q "lint: error: failed yamllint on"
   echo $output | grep -q "line too long (114 > 80 characters)"
 
-  cat ${GITHUB_OUTPUT_FILE} | grep -q -Pzo "yamllint_output<<EOF\n$INPUT_YAMLLINT_FILE_OR_DIR"
+  cat ${GITHUB_OUTPUT_FILE} | grep -q "$INPUT_YAMLLINT_FILE_OR_DIR"
 
   [[ "${status}" -eq 1 ]]
 }
@@ -106,6 +106,7 @@ function setup() {
   -v "${ROOT_DIR}:/mnt/" \
   -e INPUT_YAMLLINT_FILE_OR_DIR="${INPUT_YAMLLINT_FILE_OR_DIR}" \
   -e INPUT_YAMLLINT_COMMENT="1" \
+  -e GITHUB_ACCESS_TOKEN="${GITHUB_ACCESS_TOKEN}" \
   -e GITHUB_EVENT_PATH="/tmp/" \
   -e GITHUB_EVENT_NAME="pull_request" \
   --mount type=bind,source="${GITHUB_OUTPUT_FILE}",target=/github_output \
@@ -118,7 +119,7 @@ function setup() {
   echo $output | grep -q "line too long (114 > 80 characters)"
   echo $output | grep -q "lint: info: commenting on the pull request"
 
-  cat ${GITHUB_OUTPUT_FILE} | grep -q -Pzo "yamllint_output<<EOF\n$INPUT_YAMLLINT_FILE_OR_DIR"
+  cat ${GITHUB_OUTPUT_FILE} | grep -q "$INPUT_YAMLLINT_FILE_OR_DIR"
 
   [[ "${status}" -eq 1 ]]
 }
@@ -130,6 +131,7 @@ function setup() {
   -v "${ROOT_DIR}:/mnt/" \
   -e INPUT_YAMLLINT_FILE_OR_DIR="${INPUT_YAMLLINT_FILE_OR_DIR}" \
   -e INPUT_YAMLLINT_COMMENT="true" \
+  -e GITHUB_ACCESS_TOKEN="${GITHUB_ACCESS_TOKEN}" \
   -e GITHUB_EVENT_PATH="/tmp/" \
   -e GITHUB_EVENT_NAME="pull_request" \
   --mount type=bind,source="${GITHUB_OUTPUT_FILE}",target=/github_output \
@@ -142,7 +144,7 @@ function setup() {
   echo $output | grep -q "line too long (114 > 80 characters)"
   echo $output | grep -q "lint: info: commenting on the pull request"
 
-  cat ${GITHUB_OUTPUT_FILE} | grep -q -Pzo "yamllint_output<<EOF\n$INPUT_YAMLLINT_FILE_OR_DIR"
+  cat ${GITHUB_OUTPUT_FILE} | grep -q "$INPUT_YAMLLINT_FILE_OR_DIR"
 
   [[ "${status}" -eq 1 ]]
 }
@@ -165,7 +167,7 @@ function setup() {
   echo $output | grep -q "$INPUT_YAMLLINT_FILE_OR_DIR"
   echo $output | grep -vq "lint: info: commenting on the pull request"
 
-  cat ${GITHUB_OUTPUT_FILE} | grep -vq -Pzo "yamllint_output<<EOF\n$INPUT_YAMLLINT_FILE_OR_DIR"
+  cat ${GITHUB_OUTPUT_FILE} | grep -vq "$INPUT_YAMLLINT_FILE_OR_DIR"
 
   [[ "${status}" -eq 0 ]]
 }
@@ -190,7 +192,7 @@ function setup() {
   echo $output | grep -q "line too long (114 > 80 characters)"
   echo $output | grep -vq "lint: info: commenting on the pull request"
 
-  cat ${GITHUB_OUTPUT_FILE} | grep -q -Pzo "yamllint_output<<EOF\n$INPUT_YAMLLINT_FILE_OR_DIR"
+  cat ${GITHUB_OUTPUT_FILE} | grep -q "$INPUT_YAMLLINT_FILE_OR_DIR"
 
   [[ "${status}" -eq 1 ]]
 }
@@ -214,7 +216,7 @@ function setup() {
   echo $output | grep -q "line too long (114 > 80 characters)"
   echo $output | grep -vq "lint: info: commenting on the pull request"
 
-  cat ${GITHUB_OUTPUT_FILE} | grep -q -Pzo "yamllint_output<<EOF\n$INPUT_YAMLLINT_FILE_OR_DIR"
+  cat ${GITHUB_OUTPUT_FILE} | grep -q "$INPUT_YAMLLINT_FILE_OR_DIR"
 
   [[ "${status}" -eq 1 ]]
 }
@@ -239,7 +241,7 @@ function setup() {
   echo $output | grep -q "line too long (114 > 80 characters)"
   echo $output | grep -vq "lint: info: commenting on the pull request"
 
-  cat ${GITHUB_OUTPUT_FILE} | grep -q -Pzo "yamllint_output<<EOF\n$INPUT_YAMLLINT_FILE_OR_DIR"
+  cat ${GITHUB_OUTPUT_FILE} | grep -q "$INPUT_YAMLLINT_FILE_OR_DIR"
 
   [[ "${status}" -eq 1 ]]
 }
@@ -262,7 +264,7 @@ function setup() {
   echo $output | grep -q "line too long (114 > 80 characters)"
   echo $output | grep -vq "lint: info: commenting on the pull request"
 
-  cat ${GITHUB_OUTPUT_FILE} | grep -q -Pzo "yamllint_output<<EOF\n$INPUT_YAMLLINT_FILE_OR_DIR"
+  cat ${GITHUB_OUTPUT_FILE} | grep -q "$INPUT_YAMLLINT_FILE_OR_DIR"
 
   [[ "${status}" -eq 1 ]]
 }
