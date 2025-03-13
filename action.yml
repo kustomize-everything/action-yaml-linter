@@ -39,4 +39,4 @@ runs:
   using: 'docker'
   # Dockerfile is automatically used in PRs, but not CI
   image: 'Dockerfile'
-  #image: 'docker://ghcr.io/kustomize-everything/action-yaml-linter:v3.2.0'
+  #image: 'docker://ghcr.io/kustomize-everything/action-yaml-linter:v3.3.0'
