@@ -7,14 +7,14 @@ jobs:
   markdown:
     runs-on: 'ubuntu-latest'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Markdown Lint
         uses: actionshub/markdownlint@v3.1.4
 
   Dockerfile:
     runs-on: 'ubuntu-latest'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Dockerfile Lint
         uses: burdzwastaken/hadolint-action@1.14.0
         env:
@@ -24,7 +24,7 @@ jobs:
   yaml:
     runs-on: 'ubuntu-latest'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: YAML Lint
         uses: kustomize-everything/action-yaml-linter@main
         with:
@@ -35,6 +35,6 @@ jobs:
   shell:
     runs-on: 'ubuntu-latest'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Run ShellCheck
         uses: ludeeus/action-shellcheck@2.0.0
